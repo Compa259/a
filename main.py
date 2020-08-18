@@ -1,5 +1,4 @@
 import time
-
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow, Flow
 from google.auth.transport.requests import Request
@@ -62,24 +61,18 @@ if __name__ == '__main__':
     connection_str = 'clickhouse://ducnm:H7R67ciSgvcyxCNodD9c@13.229.34.221:8128/tripi_data?charset=utf8'
     engine = create_engine(connection_str)
 
-    while True:
-        execute_commands, execute_hours = read_data()
-        now = datetime.datetime.now().hour
-        if now in execute_hours:
-            for sheet_info in execute_commands:
-                if sheet_info['time'] == now:
-                    sql = sheet_info['sql']
-                    result = engine.execute(f'{sql}')
-                    # result = client.execute(f'{sql} FORMAT TabSeparatedWithNamesAndTypes')
-
-                    sheet_id = sheet_info['sheet_id'].split('/')[5]
-                    header = sheet_info['header'].split(',')
-                    df = DataFrame(result.fetchall(), columns=header)
-                    df = df.T.reset_index().values.T.tolist()
-                    writer(df, sheet_id)
-        else:
-            print('bbb')
-        time.sleep(60 * 10)
+    execute_commands, execute_hours = read_data()
+    print(execute_commands)
+    # for sheet_info in execute_commands:
+    #     sql = sheet_info['sql']
+    #     result = engine.execute(f'{sql}')
+    #     # result = client.execute(f'{sql} FORMAT TabSeparatedWithNamesAndTypes')
+    #
+    #     sheet_id = sheet_info['sheet_id'].split('/')[5]
+    #     header = sheet_info['header'].split(',')
+    #     df = DataFrame(result.fetchall(), columns=header)
+    #     df = df.T.reset_index().values.T.tolist()
+        # writer(df, sheet_id)
 
 
     # for sheet_info in execute_commands:
