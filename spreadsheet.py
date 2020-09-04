@@ -17,7 +17,7 @@ if __name__ == '__main__':
                               password='bWqFHseP8KjIZw+RhzQL',
                               database='tripi_data')
     #connection_str = 'clickhouse://ducnm:H7R67ciSgvcyxCNodD9c@13.229.34.221:8128/tripi_data?charset=utf8'
-    sheet = client.open('Tripi-data_clickhouse_DAILY UPDATE FROM DB TO GGSHEET (OPS)').get_worksheet(0)
+    sheet = client.open('[clickhouse] - DAILY UPDATE FROM DB TO GGSHEET').get_worksheet(0)
     rows = sheet.get_all_records()
 
     for row in rows:
@@ -41,6 +41,7 @@ if __name__ == '__main__':
                     pass
         except:
             pass
+
 
 
 
